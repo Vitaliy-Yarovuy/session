@@ -162,9 +162,17 @@ function session(options){
 
     // expose store
     req.sessionStore = store;
-
-    // get the session ID from the cookie
-    var cookieId = req.sessionID = getcookie(req, name, secret);
+  
+    
+    var cookieId;
+    //get session ID from query
+    //todo start using encryption
+    if(req.query.sessionID){
+      cookieId = req.sessionID = req.query.sessionID;
+    } else {
+      // get the session ID from the cookie
+      var cookieId = req.sessionID = getcookie(req, name, secret);
+    }
 
     // set-cookie
     onHeaders(res, function(){
